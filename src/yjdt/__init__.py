@@ -20,11 +20,13 @@ Yajiang Hydropower Cascade Distributed Intelligent Control System (YJDT)
 - 网络安全防护（IDS/RBAC/态势感知）
 - 软件在环测试
 - 可视化界面
+- L4级自主运行中试平台（对抗性场景/HIL测试/具身智能/设计验证风洞）
 
 对标核电站安全分析与工业4.0标准，确保极端场景安全高效
+实现"设计即验证、建设即演练"范式
 """
 
-__version__ = "1.3.0"
+__version__ = "1.5.0"
 __author__ = "Hydropower Research Team"
 
 from yjdt.core.hydraulic import HydraulicSystem, Pipeline, SurgeTank
@@ -74,6 +76,53 @@ from yjdt.testing.scenario_test import ScenarioTestRunner, ScenarioTestCase
 from yjdt.testing.closed_loop_test import ClosedLoopTestHarness, TestScenarioInjector
 from yjdt.testing.automated_test import AutomatedTestFramework
 from yjdt.testing.test_report import TestReportGenerator
+
+# AI智能诊断
+from yjdt.ai.deep_diagnosis import (
+    EnsembleDiagnosisEngine,
+    IsolationForest,
+    LSTMPredictor,
+    AutoEncoderDetector,
+)
+
+# 基础设施
+from yjdt.infrastructure.data_bus import DataBus, Signal, Event, EventType
+from yjdt.infrastructure.config_manager import ConfigManager, SystemConfig
+
+# 高级水力仿真
+from yjdt.core.advanced_hydraulic import (
+    NonlinearPipeline,
+    BranchPipelineNetwork,
+    EquipmentDegradation,
+)
+
+# L4级自主运行中试平台
+from yjdt.pilot_platform.adversarial_generator import (
+    AdversarialScenarioGenerator,
+    CornerCaseSearcher,
+    FailureModeSynthesizer,
+    ScenarioDiffusionModel,
+)
+from yjdt.pilot_platform.hil_framework import (
+    HILTestBench,
+    ControllerInterface,
+    RealTimeSimulator,
+    PowerLevelInterface,
+    HILTestCase,
+)
+from yjdt.pilot_platform.embodied_intelligence import (
+    EmbodiedAgent,
+    RobotTrainer,
+    VisualPerceptionModule,
+    AutonomousNavigator,
+    EmergencyEscapeAgent,
+)
+from yjdt.pilot_platform.design_verification import (
+    DesignVerificationWindTunnel,
+    MultiSchemeComparator,
+    SurgeTankOptimizer,
+    WaterHammerAnalyzer,
+)
 
 __all__ = [
     # 核心仿真模型
@@ -150,4 +199,39 @@ __all__ = [
     "TestScenarioInjector",
     "AutomatedTestFramework",
     "TestReportGenerator",
+    # AI智能诊断
+    "EnsembleDiagnosisEngine",
+    "IsolationForest",
+    "LSTMPredictor",
+    "AutoEncoderDetector",
+    # 基础设施
+    "DataBus",
+    "Signal",
+    "Event",
+    "EventType",
+    "ConfigManager",
+    "SystemConfig",
+    # 高级水力仿真
+    "NonlinearPipeline",
+    "BranchPipelineNetwork",
+    "EquipmentDegradation",
+    # L4级自主运行中试平台
+    "AdversarialScenarioGenerator",
+    "CornerCaseSearcher",
+    "FailureModeSynthesizer",
+    "ScenarioDiffusionModel",
+    "HILTestBench",
+    "ControllerInterface",
+    "RealTimeSimulator",
+    "PowerLevelInterface",
+    "HILTestCase",
+    "EmbodiedAgent",
+    "RobotTrainer",
+    "VisualPerceptionModule",
+    "AutonomousNavigator",
+    "EmergencyEscapeAgent",
+    "DesignVerificationWindTunnel",
+    "MultiSchemeComparator",
+    "SurgeTankOptimizer",
+    "WaterHammerAnalyzer",
 ]
