@@ -7,7 +7,11 @@ Yajiang Hydropower Cascade Distributed Intelligent Control System (YJDT)
 - 水轮机/发电机全要素仿真
 - 传感器和执行器仿真
 - 分层分布式控制（PID/MPC）
+- 雅江特色场景库（高海拔/地震/冰川融水）
 - 全场景生成与识别（100%覆盖，含万年一遇极端场景）
+- 闭环仿真框架（本体仿真→数据同化→评价诊断→预测→调度→控制）
+- L0-L5智能化等级评价体系
+- 全场景在环测试框架
 - 概率安全分析（PSA/FTA/ETA）
 - 智能故障诊断与预测维护
 - 应急响应决策支持
@@ -20,7 +24,7 @@ Yajiang Hydropower Cascade Distributed Intelligent Control System (YJDT)
 对标核电站安全分析与工业4.0标准，确保极端场景安全高效
 """
 
-__version__ = "1.2.0"
+__version__ = "1.3.0"
 __author__ = "Hydropower Research Team"
 
 from yjdt.core.hydraulic import HydraulicSystem, Pipeline, SurgeTank
@@ -33,6 +37,7 @@ from yjdt.scenarios.generator import ScenarioGenerator
 from yjdt.scenarios.recognizer import ScenarioRecognizer
 from yjdt.scenarios.extreme_scenarios import ExtremeScenarioGenerator
 from yjdt.scenarios.coverage_analyzer import ScenarioCoverageAnalyzer, SafetyMarginEvaluator
+from yjdt.scenarios.yajiang_scenarios import YajiangScenarioLibrary, YajiangScenario
 from yjdt.safety.psa_analysis import PSAAnalyzer, FaultTree, FaultTreeAnalyzer, EventTree
 from yjdt.safety.intelligent_diagnosis import FaultDiagnoser, PredictiveMaintenance, HealthAssessment
 from yjdt.safety.emergency_response import EmergencyResponseCoordinator, EmergencyPlanLibrary
@@ -48,6 +53,27 @@ from yjdt.security.intrusion_detection import IntrusionDetectionSystem
 from yjdt.security.behavior_analysis import BehaviorAnalyzer
 from yjdt.security.access_control import AccessController
 from yjdt.security.situational_awareness import SecuritySituationAwareness
+
+# 闭环仿真框架
+from yjdt.closedloop.physical_simulation import PhysicalSimulator, MultiPhysicsModel
+from yjdt.closedloop.data_assimilation import DataAssimilator, EnsembleKalmanFilter
+from yjdt.closedloop.evaluation_diagnosis import StateEvaluator, FaultDiagnosisEngine
+from yjdt.closedloop.prediction_engine import PredictionEngine
+from yjdt.closedloop.optimal_scheduling import OptimalScheduler, AGCController
+from yjdt.closedloop.control_executor import ControlExecutor, SafetyMonitor
+from yjdt.closedloop.closed_loop_coordinator import ClosedLoopCoordinator, InLoopTester
+
+# 智能化评价
+from yjdt.evaluation.intelligence_level import IntelligenceLevelEvaluator, IntelligenceLevel
+from yjdt.evaluation.capability_assessment import CapabilityAssessment
+from yjdt.evaluation.scenario_coverage import ScenarioCoverageEvaluator
+from yjdt.evaluation.performance_benchmark import PerformanceBenchmark
+
+# 测试框架
+from yjdt.testing.scenario_test import ScenarioTestRunner, ScenarioTestCase
+from yjdt.testing.closed_loop_test import ClosedLoopTestHarness, TestScenarioInjector
+from yjdt.testing.automated_test import AutomatedTestFramework
+from yjdt.testing.test_report import TestReportGenerator
 
 __all__ = [
     # 核心仿真模型
@@ -68,6 +94,8 @@ __all__ = [
     "ExtremeScenarioGenerator",
     "ScenarioCoverageAnalyzer",
     "SafetyMarginEvaluator",
+    "YajiangScenarioLibrary",
+    "YajiangScenario",
     # 安全分析
     "PSAAnalyzer",
     "FaultTree",
@@ -95,4 +123,31 @@ __all__ = [
     "BehaviorAnalyzer",
     "AccessController",
     "SecuritySituationAwareness",
+    # 闭环仿真框架
+    "PhysicalSimulator",
+    "MultiPhysicsModel",
+    "DataAssimilator",
+    "EnsembleKalmanFilter",
+    "StateEvaluator",
+    "FaultDiagnosisEngine",
+    "PredictionEngine",
+    "OptimalScheduler",
+    "AGCController",
+    "ControlExecutor",
+    "SafetyMonitor",
+    "ClosedLoopCoordinator",
+    "InLoopTester",
+    # 智能化评价
+    "IntelligenceLevelEvaluator",
+    "IntelligenceLevel",
+    "CapabilityAssessment",
+    "ScenarioCoverageEvaluator",
+    "PerformanceBenchmark",
+    # 测试框架
+    "ScenarioTestRunner",
+    "ScenarioTestCase",
+    "ClosedLoopTestHarness",
+    "TestScenarioInjector",
+    "AutomatedTestFramework",
+    "TestReportGenerator",
 ]
