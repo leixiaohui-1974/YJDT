@@ -6,7 +6,8 @@ Yajiang Hydropower Cascade Distributed Intelligent Control System (YJDT)
 - 水力系统MOC水锤计算
 - 水轮机/发电机全要素仿真
 - 传感器和执行器仿真
-- 分层分布式控制（PID/MPC）
+- 分层分布式控制（PID/MPC/QP求解器）
+- 多智能体梯级协调（共识协议/ADMM分布式优化）
 - 雅江特色场景库（高海拔/地震/冰川融水）
 - 全场景生成与识别（100%覆盖，含万年一遇极端场景）
 - 闭环仿真框架（本体仿真→数据同化→评价诊断→预测→调度→控制）
@@ -16,17 +17,21 @@ Yajiang Hydropower Cascade Distributed Intelligent Control System (YJDT)
 - 智能故障诊断与预测维护
 - 应急响应决策支持
 - 实时监控与报警管理
-- 数字孪生与预测仿真
-- 网络安全防护（IDS/RBAC/态势感知）
+- 数字孪生与预测仿真（实时校准/UKF/RLS）
+- 网络安全防护（IDS/RBAC/态势感知/攻击仿真）
+- 调度优化求解（日前/日内/实时/AGC）
 - 软件在环测试
 - 可视化界面
 - L4级自主运行中试平台（对抗性场景/HIL测试/具身智能/设计验证风洞）
+- 系统集成入口（统一Facade/Builder模式/组件编排）
+- 工业数据对接（SCADA/OPC-UA/Modbus/历史数据库）
+- 场景数据适配器（运行数据采集/场景匹配/数据驱动场景生成）
 
 对标核电站安全分析与工业4.0标准，确保极端场景安全高效
 实现"设计即验证、建设即演练"范式
 """
 
-__version__ = "1.6.0"
+__version__ = "1.7.0"
 __author__ = "Hydropower Research Team"
 
 from yjdt.core.hydraulic import HydraulicSystem, Pipeline, SurgeTank
@@ -59,6 +64,40 @@ from yjdt.security.behavior_analysis import BehaviorAnalyzer
 from yjdt.security.access_control import AccessController
 from yjdt.security.situational_awareness import SecuritySituationAwareness
 from yjdt.security.attack_simulation import AttackSimulator, DataInjectionAttack, ProtocolAttack
+
+# 调度优化
+from yjdt.optimization.scheduling_solver import (
+    CascadeSchedulingSolver,
+    RealTimeDispatcher,
+    LinearProgramSolver,
+    MixedIntegerSolver,
+    ADMMSolver,
+    HydropowerUnit,
+    Reservoir,
+    SchedulingResult,
+)
+
+# 系统集成
+from yjdt.integration.system_facade import (
+    YJDTSystem,
+    SystemBuilder,
+    ComponentRegistry,
+    IntegrationContext,
+    SystemMode,
+)
+from yjdt.integration.data_connector import (
+    DataConnector,
+    SCADAConnector,
+    HistorianConnector,
+    OPCUAClient,
+    RealtimeDataBridge,
+)
+from yjdt.integration.scenario_data_adapter import (
+    ScenarioDataAdapter,
+    OperationalDataCollector,
+    ScenarioMatcher,
+    DataDrivenScenarioGenerator,
+)
 
 # 闭环仿真框架
 from yjdt.closedloop.physical_simulation import PhysicalSimulator, MultiPhysicsModel
@@ -253,4 +292,28 @@ __all__ = [
     "AttackSimulator",
     "DataInjectionAttack",
     "ProtocolAttack",
+    # 调度优化
+    "CascadeSchedulingSolver",
+    "RealTimeDispatcher",
+    "LinearProgramSolver",
+    "MixedIntegerSolver",
+    "ADMMSolver",
+    "HydropowerUnit",
+    "Reservoir",
+    "SchedulingResult",
+    # 系统集成
+    "YJDTSystem",
+    "SystemBuilder",
+    "ComponentRegistry",
+    "IntegrationContext",
+    "SystemMode",
+    "DataConnector",
+    "SCADAConnector",
+    "HistorianConnector",
+    "OPCUAClient",
+    "RealtimeDataBridge",
+    "ScenarioDataAdapter",
+    "OperationalDataCollector",
+    "ScenarioMatcher",
+    "DataDrivenScenarioGenerator",
 ]
