@@ -26,12 +26,14 @@ Yajiang Hydropower Cascade Distributed Intelligent Control System (YJDT)
 - 系统集成入口（统一Facade/Builder模式/组件编排）
 - 工业数据对接（SCADA/OPC-UA/Modbus/历史数据库）
 - 场景数据适配器（运行数据采集/场景匹配/数据驱动场景生成）
+- REST API服务（FastAPI/OpenAPI/WebSocket实时推送）
+- 数据持久化（SQLite/Repository模式/时间序列存储）
 
 对标核电站安全分析与工业4.0标准，确保极端场景安全高效
 实现"设计即验证、建设即演练"范式
 """
 
-__version__ = "1.7.0"
+__version__ = "1.8.0"
 __author__ = "Hydropower Research Team"
 
 from yjdt.core.hydraulic import HydraulicSystem, Pipeline, SurgeTank
@@ -97,6 +99,31 @@ from yjdt.integration.scenario_data_adapter import (
     OperationalDataCollector,
     ScenarioMatcher,
     DataDrivenScenarioGenerator,
+)
+
+# REST API服务
+from yjdt.api.server import (
+    create_app,
+    APIServer,
+    get_app,
+)
+from yjdt.api.websocket import (
+    WebSocketManager,
+    RealtimeDataStreamer,
+)
+
+# 数据持久化
+from yjdt.persistence.database import (
+    Database,
+    SQLiteDatabase,
+    DatabaseManager,
+    get_database_manager,
+)
+from yjdt.persistence.repository import (
+    SimulationRepository,
+    ScenarioRepository,
+    TimeSeriesRepository,
+    AlarmRepository,
 )
 
 # 闭环仿真框架
@@ -316,4 +343,19 @@ __all__ = [
     "OperationalDataCollector",
     "ScenarioMatcher",
     "DataDrivenScenarioGenerator",
+    # REST API服务
+    "create_app",
+    "APIServer",
+    "get_app",
+    "WebSocketManager",
+    "RealtimeDataStreamer",
+    # 数据持久化
+    "Database",
+    "SQLiteDatabase",
+    "DatabaseManager",
+    "get_database_manager",
+    "SimulationRepository",
+    "ScenarioRepository",
+    "TimeSeriesRepository",
+    "AlarmRepository",
 ]
