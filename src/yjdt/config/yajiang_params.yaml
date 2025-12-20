@@ -1,0 +1,234 @@
+# 雅江水电梯级工程参数配置
+# Yajiang Hydropower Cascade Engineering Parameters
+
+# ============================================================
+# 方案一：工程现实版 - 多级梯级+超长引水模型
+# ============================================================
+scheme_realistic:
+  name: "雅江梯级开发方案（多级+超长引水）"
+  description: "高水头Francis机组 + 超长隧洞，适合水锤与控制稳定性分析"
+
+  # 水力系统参数 (Hydraulic Parameters)
+  hydraulic:
+    rated_head: 480.0          # 额定水头 H_r (m)
+    rated_flow: 210.0          # 单机引用流量 Q_r (m³/s)
+    tunnel_length: 25000.0     # 引水隧洞长度 L (m)
+    tunnel_diameter: 11.0      # 隧洞直径 D (m)
+    wave_speed: 1350.0         # 压力波速 a (m/s)
+    friction_factor: 0.015     # 流水阻力系数 f
+    water_inertia_time: 12.0   # 水流惯性时间常数 T_w (s)
+    gravity: 9.81              # 重力加速度 (m/s²)
+    water_density: 1000.0      # 水密度 (kg/m³)
+    bulk_modulus: 2.2e9        # 水的体积弹性模量 (Pa)
+
+  # 调压设施参数 (Surge Tank Parameters)
+  surge_tank:
+    type: "impedance"          # 类型：阻抗式
+    distance_from_plant: 800.0 # 距厂房距离 (m)
+    main_diameter: 45.0        # 大井直径 (m)
+    orifice_diameter: 6.5      # 阻抗孔口直径 (m)
+    height: 120.0              # 调压室高度 (m)
+    initial_level: 60.0        # 初始水位 (m)
+
+  # 水轮机参数 (Turbine Parameters)
+  turbine:
+    type: "francis"            # 机型：混流式
+    rated_power: 1000.0        # 额定功率 (MW)
+    rated_speed: 166.7         # 额定转速 (r/min)
+    rated_head: 480.0          # 额定水头 (m)
+    rated_flow: 210.0          # 额定流量 (m³/s)
+    efficiency: 0.94           # 额定效率
+    runaway_speed_ratio: 1.8   # 飞逸转速比
+    inertia_gd2: 130000.0      # 机组惯性矩 GD² (t·m²)
+    guide_vane_close_time: 8.0 # 导叶关闭时间 (s)
+    guide_vane_open_time: 12.0 # 导叶开启时间 (s)
+    num_guide_vanes: 24        # 导叶数量
+    num_runner_blades: 15      # 转轮叶片数
+
+  # 发电机参数 (Generator Parameters)
+  generator:
+    type: "synchronous"        # 同步发电机
+    rated_power: 1111.0        # 额定容量 (MVA)
+    rated_voltage: 20.0        # 额定电压 (kV)
+    rated_frequency: 50.0      # 额定频率 (Hz)
+    power_factor: 0.9          # 功率因数
+    poles: 36                  # 极对数
+    inertia_constant: 4.0      # 惯性时间常数 H (s)
+    d_axis_reactance: 1.0      # d轴同步电抗 (pu)
+    q_axis_reactance: 0.6      # q轴同步电抗 (pu)
+    d_axis_transient: 0.3      # d轴暂态电抗 (pu)
+    d_axis_subtransient: 0.2   # d轴次暂态电抗 (pu)
+
+  # 调速器参数 (Governor Parameters)
+  governor:
+    type: "PID"
+    kp: 2.5                    # 比例增益
+    ki: 0.15                   # 积分增益
+    kd: 4.0                    # 微分增益
+    servo_time: 0.5            # 执行器时间常数 T_y (s)
+    dead_band: 0.0004          # 死区 (pu)
+    rate_limit: 0.1            # 速率限制 (pu/s)
+    position_limit_max: 1.0    # 位置上限
+    position_limit_min: 0.0    # 位置下限
+
+  # 边界条件 (Boundary Conditions)
+  boundary:
+    upstream_level_max: 2200.0   # 上游最高水位 (m)
+    upstream_level_min: 2140.0   # 上游最低水位 (m)
+    upstream_level_nominal: 2170.0  # 上游正常水位 (m)
+    downstream_level: 1690.0     # 下游水位 (m)
+    grid_frequency_deadband: 0.05  # 电网频率死区 (Hz)
+    ambient_temperature: 15.0    # 环境温度 (°C)
+
+# ============================================================
+# 方案二：理论极限版 - 一级开发模型
+# ============================================================
+scheme_extreme:
+  name: "雅江一级开发方案（理论极限）"
+  description: "2000m超高水头开发，冲击式/多级可逆式机组"
+
+  hydraulic:
+    rated_head: 2100.0         # 额定水头 (m)
+    rated_flow: 40.0           # 单机引用流量 (m³/s)
+    tunnel_length: 45000.0     # 引水隧洞长度 (m)
+    tunnel_diameter: 6.0       # 隧洞直径 (m)
+    wave_speed: 1400.0         # 压力波速 (m/s)
+    friction_factor: 0.012     # 流水阻力系数
+    water_inertia_time: 25.0   # 水流惯性时间常数 (s)
+    gravity: 9.81
+    water_density: 1000.0
+    bulk_modulus: 2.2e9
+
+  surge_tank:
+    type: "differential"       # 差动式调压室
+    distance_from_plant: 1200.0
+    main_diameter: 35.0
+    riser_diameter: 8.0
+    height: 200.0
+    initial_level: 100.0
+
+  turbine:
+    type: "pelton"             # 冲击式水轮机
+    rated_power: 800.0         # 额定功率 (MW)
+    rated_speed: 300.0         # 额定转速 (r/min)
+    rated_head: 2100.0
+    rated_flow: 40.0
+    efficiency: 0.92
+    runaway_speed_ratio: 1.9
+    inertia_gd2: 45000.0
+    num_nozzles: 6             # 喷嘴数量
+    deflector_time: 0.3        # 折向器动作时间 (s)
+
+  generator:
+    type: "synchronous"
+    rated_power: 889.0
+    rated_voltage: 18.0
+    rated_frequency: 50.0
+    power_factor: 0.9
+    poles: 20
+    inertia_constant: 5.0
+    d_axis_reactance: 1.1
+    q_axis_reactance: 0.65
+    d_axis_transient: 0.32
+    d_axis_subtransient: 0.22
+
+  governor:
+    type: "MPC"
+    prediction_horizon: 30     # 预测时域
+    control_horizon: 10        # 控制时域
+    sample_time: 0.1           # 采样时间 (s)
+    servo_time: 0.3
+    dead_band: 0.0003
+
+  boundary:
+    upstream_level_max: 3800.0
+    upstream_level_min: 3650.0
+    upstream_level_nominal: 3720.0
+    downstream_level: 1620.0
+    grid_frequency_deadband: 0.03
+    ambient_temperature: 5.0
+
+# ============================================================
+# 梯级电站配置
+# ============================================================
+cascade_config:
+  name: "雅江水电梯级群"
+  stations:
+    - id: "YJ01"
+      name: "墨脱水电站"
+      position: 1
+      installed_capacity: 6000  # MW
+      num_units: 6
+      scheme: "scheme_realistic"
+
+    - id: "YJ02"
+      name: "多雄藏布水电站"
+      position: 2
+      installed_capacity: 4000
+      num_units: 4
+      scheme: "scheme_realistic"
+
+    - id: "YJ03"
+      name: "达木水电站"
+      position: 3
+      installed_capacity: 3000
+      num_units: 3
+      scheme: "scheme_realistic"
+
+    - id: "YJ04"
+      name: "巴玉水电站"
+      position: 4
+      installed_capacity: 2500
+      num_units: 3
+      scheme: "scheme_realistic"
+
+    - id: "YJ05"
+      name: "通德水电站"
+      position: 5
+      installed_capacity: 2000
+      num_units: 2
+      scheme: "scheme_realistic"
+
+# ============================================================
+# 控制层级配置
+# ============================================================
+control_hierarchy:
+  levels:
+    - name: "现场级"
+      level: 1
+      controller_type: "PID"
+      cycle_time: 0.02         # 控制周期 (s)
+
+    - name: "单元级"
+      level: 2
+      controller_type: "MPC"
+      cycle_time: 0.1
+
+    - name: "厂站级"
+      level: 3
+      controller_type: "optimization"
+      cycle_time: 1.0
+
+    - name: "梯级调度级"
+      level: 4
+      controller_type: "coordination"
+      cycle_time: 60.0
+
+# ============================================================
+# 仿真配置
+# ============================================================
+simulation:
+  moc:
+    courant_number: 1.0        # Courant数
+    num_segments: 100          # 管道分段数
+    time_step: 0.01            # 时间步长 (s)
+    total_time: 300.0          # 仿真总时间 (s)
+
+  transient:
+    load_rejection_rate: 1.0   # 甩负荷比例
+    load_acceptance_rate: 0.5  # 加负荷比例
+    emergency_shutdown: true   # 是否包含紧急停机
+
+  steady_state:
+    convergence_tolerance: 1e-6
+    max_iterations: 1000

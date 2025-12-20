@@ -1,0 +1,87 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "yajiang-hydropower-system"
+version = "1.0.0"
+description = "雅江水电梯级分层分布式智能控制系统 - Yajiang Hydropower Cascade Distributed Intelligent Control System"
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = ">=3.9"
+authors = [
+    {name = "Hydropower Research Team", email = "research@hydropower.edu.cn"}
+]
+keywords = [
+    "hydropower", "water-hammer", "MOC", "turbine", "governor",
+    "distributed-control", "MPC", "PID", "simulation", "SCADA"
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering",
+]
+
+dependencies = [
+    "numpy>=1.24.0",
+    "scipy>=1.10.0",
+    "matplotlib>=3.7.0",
+    "pandas>=2.0.0",
+    "scikit-learn>=1.2.0",
+    "torch>=2.0.0",
+    "streamlit>=1.28.0",
+    "plotly>=5.15.0",
+    "pyyaml>=6.0",
+    "pydantic>=2.0.0",
+    "control>=0.9.0",
+    "networkx>=3.0",
+    "h5py>=3.8.0",
+    "tqdm>=4.65.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.3.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "isort>=5.12.0",
+    "mypy>=1.3.0",
+    "flake8>=6.0.0",
+]
+docs = [
+    "sphinx>=6.0.0",
+    "sphinx-rtd-theme>=1.2.0",
+]
+
+[project.scripts]
+yjdt = "yjdt.main:main"
+yjdt-gui = "yjdt.gui.app:main"
+
+[project.urls]
+Homepage = "https://github.com/hydropower/yajiang-system"
+Documentation = "https://yajiang-system.readthedocs.io"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.black]
+line-length = 100
+target-version = ['py39', 'py310', 'py311']
+
+[tool.isort]
+profile = "black"
+line_length = 100
+
+[tool.mypy]
+python_version = "3.9"
+warn_return_any = true
+warn_unused_configs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-v --cov=yjdt --cov-report=html"
