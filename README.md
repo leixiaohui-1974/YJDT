@@ -47,6 +47,27 @@ YJDT is an intelligent control system simulation platform for the Yarlung Tsangp
 - **预测性维护**: RUL(剩余使用寿命)预测、健康评估
 - **应急响应**: I-IV级应急预案库、行动协调、恢复规划
 
+### 📺 实时监控与报警 / Real-time Monitoring & Alarm
+- **多源数据采集**: 传感器、PLC、DCS多协议支持
+- **四级报警管理**: 预警/一般/重要/紧急，智能升级策略
+- **趋势分析**: 多尺度趋势检测、异常模式识别
+- **SOE事件记录**: 毫秒级事件顺序记录
+- **历史数据管理**: 多级存储、压缩归档、快速回放
+
+### 🪞 数字孪生 / Digital Twin
+- **物理模型同步**: 水力/机械/电气/热力多模型融合
+- **状态估计**: 卡尔曼滤波、粒子滤波最优估计
+- **虚拟传感器**: 软测量、传感器融合与故障检测
+- **预测仿真**: What-If场景分析、最优控制搜索
+- **风险预评估**: 前瞻性风险量化
+
+### 🔐 网络安全防护 / Cybersecurity Protection
+- **入侵检测(IDS)**: 规则检测、协议分析、行为基线
+- **访问控制(RBAC)**: 角色权限、多因素认证、审计日志
+- **行为分析**: 操作员画像、异常行为检测
+- **态势感知**: 安全指标融合、威胁情报整合
+- **对标IEC 62443**: 工控网络安全标准
+
 ### 🧪 软件在环测试 (SIL) / Software-in-the-Loop Testing
 - 自动化测试用例执行
 - 验收标准自动评估
@@ -151,6 +172,21 @@ YJDT/
 │   │   ├── psa_analysis.py   # PSA/FTA/ETA分析
 │   │   ├── intelligent_diagnosis.py  # 智能诊断
 │   │   └── emergency_response.py     # 应急响应
+│   ├── monitoring/           # 实时监控模块
+│   │   ├── realtime_monitor.py   # 实时监控
+│   │   ├── alarm_manager.py      # 报警管理
+│   │   ├── trend_analyzer.py     # 趋势分析
+│   │   └── data_recorder.py      # 数据记录
+│   ├── digital_twin/         # 数字孪生模块
+│   │   ├── twin_engine.py        # 孪生引擎
+│   │   ├── state_estimator.py    # 状态估计
+│   │   ├── virtual_sensor.py     # 虚拟传感器
+│   │   └── predictive_simulation.py  # 预测仿真
+│   ├── security/             # 网络安全模块
+│   │   ├── intrusion_detection.py    # 入侵检测
+│   │   ├── behavior_analysis.py      # 行为分析
+│   │   ├── access_control.py         # 访问控制
+│   │   └── situational_awareness.py  # 态势感知
 │   ├── optimization/         # 优化模块
 │   │   ├── design_optimizer.py   # 设计优化
 │   │   ├── sensor_placement.py   # 传感器布设

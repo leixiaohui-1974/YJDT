@@ -11,13 +11,16 @@ Yajiang Hydropower Cascade Distributed Intelligent Control System (YJDT)
 - 概率安全分析（PSA/FTA/ETA）
 - 智能故障诊断与预测维护
 - 应急响应决策支持
+- 实时监控与报警管理
+- 数字孪生与预测仿真
+- 网络安全防护（IDS/RBAC/态势感知）
 - 软件在环测试
 - 可视化界面
 
-对标核电站安全分析方法，确保极端场景安全高效
+对标核电站安全分析与工业4.0标准，确保极端场景安全高效
 """
 
-__version__ = "1.1.0"
+__version__ = "1.2.0"
 __author__ = "Hydropower Research Team"
 
 from yjdt.core.hydraulic import HydraulicSystem, Pipeline, SurgeTank
@@ -33,6 +36,18 @@ from yjdt.scenarios.coverage_analyzer import ScenarioCoverageAnalyzer, SafetyMar
 from yjdt.safety.psa_analysis import PSAAnalyzer, FaultTree, FaultTreeAnalyzer, EventTree
 from yjdt.safety.intelligent_diagnosis import FaultDiagnoser, PredictiveMaintenance, HealthAssessment
 from yjdt.safety.emergency_response import EmergencyResponseCoordinator, EmergencyPlanLibrary
+from yjdt.monitoring.realtime_monitor import RealtimeMonitor
+from yjdt.monitoring.alarm_manager import AlarmManager
+from yjdt.monitoring.trend_analyzer import TrendAnalyzer
+from yjdt.monitoring.data_recorder import DataRecorder
+from yjdt.digital_twin.twin_engine import DigitalTwinEngine
+from yjdt.digital_twin.state_estimator import StateEstimator, KalmanFilter
+from yjdt.digital_twin.virtual_sensor import VirtualSensor, SensorFusion
+from yjdt.digital_twin.predictive_simulation import PredictiveSimulator
+from yjdt.security.intrusion_detection import IntrusionDetectionSystem
+from yjdt.security.behavior_analysis import BehaviorAnalyzer
+from yjdt.security.access_control import AccessController
+from yjdt.security.situational_awareness import SecuritySituationAwareness
 
 __all__ = [
     # 核心仿真模型
@@ -63,4 +78,21 @@ __all__ = [
     "HealthAssessment",
     "EmergencyResponseCoordinator",
     "EmergencyPlanLibrary",
+    # 实时监控
+    "RealtimeMonitor",
+    "AlarmManager",
+    "TrendAnalyzer",
+    "DataRecorder",
+    # 数字孪生
+    "DigitalTwinEngine",
+    "StateEstimator",
+    "KalmanFilter",
+    "VirtualSensor",
+    "SensorFusion",
+    "PredictiveSimulator",
+    # 网络安全
+    "IntrusionDetectionSystem",
+    "BehaviorAnalyzer",
+    "AccessController",
+    "SecuritySituationAwareness",
 ]
