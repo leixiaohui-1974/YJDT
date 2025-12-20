@@ -7,6 +7,7 @@ Yajiang Hydropower Cascade Hierarchical Distributed Intelligent System - Main En
 Usage:
     python -m yjdt                    # 显示帮助信息
     python -m yjdt gui                # 启动可视化界面
+    python -m yjdt api                # 启动REST API服务器
     python -m yjdt simulate           # 运行基础仿真
     python -m yjdt test               # 运行SIL测试
     python -m yjdt compare            # 运行方案对比
@@ -35,7 +36,7 @@ def show_banner():
     ║   Yajiang Hydropower Cascade Hierarchical Distributed             ║
     ║   Intelligent System                                              ║
     ║                                                                   ║
-    ║   Version: 1.0.0                                                  ║
+    ║   Version: 1.8.0                                                  ║
     ║   Author: YJDT Team                                               ║
     ║                                                                   ║
     ╚═══════════════════════════════════════════════════════════════════╝
@@ -51,6 +52,10 @@ def show_help():
 
     gui         启动Streamlit可视化界面
                 Launch Streamlit visualization interface
+
+    api         启动REST API服务器 (FastAPI + Swagger)
+                Launch REST API server (FastAPI + Swagger)
+                选项: --host HOST --port PORT --reload
 
     simulate    运行基础仿真示例
                 Run basic simulation example
@@ -78,8 +83,12 @@ def show_help():
     示例 / Examples:
 
         python -m yjdt gui
+        python -m yjdt api --port 8000
         python -m yjdt simulate
         python -m yjdt compare
+
+    API文档 / API Documentation:
+        启动API服务器后访问 http://localhost:8000/docs
 
     更多信息请参阅文档 / For more information, see documentation.
     """
@@ -158,6 +167,26 @@ def run_scenario():
         subprocess.run([sys.executable, "examples/scenario_testing.py"])
 
 
+def run_api(host: str = "0.0.0.0", port: int = 8000, reload: bool = False):
+    """启动REST API服务器"""
+    print(f"正在启动REST API服务器...")
+    print(f"Starting REST API server at http://{host}:{port}")
+    print(f"API文档: http://{host}:{port}/docs")
+    print(f"ReDoc文档: http://{host}:{port}/redoc")
+    print("-" * 60)
+
+    try:
+        from yjdt.api.server import APIServer
+        server = APIServer(host=host, port=port)
+        server.start(reload=reload)
+    except ImportError as e:
+        print(f"导入错误: {e}")
+        print("请确保已安装必要依赖:")
+        print("  pip install fastapi uvicorn")
+    except Exception as e:
+        print(f"启动失败: {e}")
+
+
 def show_version():
     """显示版本信息"""
     version_info = """
@@ -166,7 +195,7 @@ def show_version():
     Yajiang Hydropower Cascade Hierarchical Distributed Intelligent System
     ─────────────────────────────────────────────────────────────────
 
-    版本 Version:      1.0.0
+    版本 Version:      1.8.0
     Python:            {python_version}
     平台 Platform:     {platform}
 
@@ -177,9 +206,13 @@ def show_version():
       - 调速器模型 Governor Models (PID/MPC/Adaptive)
       - 传感器仿真 Sensor Simulation
       - 执行器仿真 Actuator Simulation
-      - 分层控制 Hierarchical Control
+      - 分层控制 Hierarchical Control (PID/MPC/Multi-Agent)
       - 场景生成 Scenario Generation
       - 场景识别 Scenario Recognition
+      - 数字孪生 Digital Twin
+      - 调度优化 Scheduling Optimization
+      - REST API服务 REST API Service (FastAPI)
+      - 数据持久化 Data Persistence (SQLite)
       - SIL测试 SIL Testing
       - 设计优化 Design Optimization
       - 生命周期分析 Lifecycle Analysis
@@ -203,13 +236,23 @@ def main():
         "command",
         nargs="?",
         default="help",
-        choices=["gui", "simulate", "test", "compare", "control", "scenario", "version", "help"],
+        choices=["gui", "api", "simulate", "test", "compare", "control", "scenario", "version", "help"],
         help="要执行的命令"
     )
+
+    # API服务器参数
+    parser.add_argument("--host", default="0.0.0.0", help="API服务器主机地址")
+    parser.add_argument("--port", type=int, default=8000, help="API服务器端口")
+    parser.add_argument("--reload", action="store_true", help="启用热重载（开发模式）")
 
     args = parser.parse_args()
 
     show_banner()
+
+    # 处理API命令（需要额外参数）
+    if args.command == "api":
+        run_api(host=args.host, port=args.port, reload=args.reload)
+        return
 
     commands = {
         "gui": run_gui,
