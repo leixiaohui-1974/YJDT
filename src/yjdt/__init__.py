@@ -26,7 +26,7 @@ Yajiang Hydropower Cascade Distributed Intelligent Control System (YJDT)
 实现"设计即验证、建设即演练"范式
 """
 
-__version__ = "1.5.0"
+__version__ = "1.6.0"
 __author__ = "Hydropower Research Team"
 
 from yjdt.core.hydraulic import HydraulicSystem, Pipeline, SurgeTank
@@ -35,6 +35,8 @@ from yjdt.core.generator import SynchronousGenerator
 from yjdt.core.governor import PIDGovernor, MPCGovernor
 from yjdt.simulation.engine import SimulationEngine
 from yjdt.control.distributed import DistributedController
+from yjdt.control.mpc_solver import MPCSolver, QPSolver, DistributedMPCSolver
+from yjdt.control.multi_agent import CascadeCoordinator, HydropowerStationAgent, ConsensusProtocol
 from yjdt.scenarios.generator import ScenarioGenerator
 from yjdt.scenarios.recognizer import ScenarioRecognizer
 from yjdt.scenarios.extreme_scenarios import ExtremeScenarioGenerator
@@ -51,10 +53,12 @@ from yjdt.digital_twin.twin_engine import DigitalTwinEngine
 from yjdt.digital_twin.state_estimator import StateEstimator, KalmanFilter
 from yjdt.digital_twin.virtual_sensor import VirtualSensor, SensorFusion
 from yjdt.digital_twin.predictive_simulation import PredictiveSimulator
+from yjdt.digital_twin.realtime_calibration import RealtimeCalibrator, TwinModelCalibrator
 from yjdt.security.intrusion_detection import IntrusionDetectionSystem
 from yjdt.security.behavior_analysis import BehaviorAnalyzer
 from yjdt.security.access_control import AccessController
 from yjdt.security.situational_awareness import SecuritySituationAwareness
+from yjdt.security.attack_simulation import AttackSimulator, DataInjectionAttack, ProtocolAttack
 
 # 闭环仿真框架
 from yjdt.closedloop.physical_simulation import PhysicalSimulator, MultiPhysicsModel
@@ -234,4 +238,19 @@ __all__ = [
     "MultiSchemeComparator",
     "SurgeTankOptimizer",
     "WaterHammerAnalyzer",
+    # MPC求解器
+    "MPCSolver",
+    "QPSolver",
+    "DistributedMPCSolver",
+    # 多智能体协调
+    "CascadeCoordinator",
+    "HydropowerStationAgent",
+    "ConsensusProtocol",
+    # 数字孪生校准
+    "RealtimeCalibrator",
+    "TwinModelCalibrator",
+    # 攻击仿真
+    "AttackSimulator",
+    "DataInjectionAttack",
+    "ProtocolAttack",
 ]
