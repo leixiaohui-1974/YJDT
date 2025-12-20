@@ -35,7 +35,17 @@ YJDT is an intelligent control system simulation platform for the Yarlung Tsangp
 ### 🎬 全场景生成与识别 / Full Scenario Generation & Recognition
 - **场景生成**: 正常运行、甩负荷、启停机、故障、极端工况、组合场景
 - **场景识别**: 基于AI的实时场景识别与异常检测
-- **场景库**: 标准场景库管理与扩展
+- **场景库**: 标准场景库管理与扩展，157+标准场景，500+极端场景
+- **100%覆盖**: 7级概率等级（常态→年级→偶发→罕见→极罕见→万年一遇→超设计基准）
+- **极端场景**: 超设计地震(XI度)、PMF洪水、巨型滑坡、网络攻击等
+
+### 🛡️ 核电站级安全分析 / Nuclear-Grade Safety Analysis
+- **概率安全分析(PSA)**: 故障树(FTA)、事件树(ETA)、共因失效(CCF)分析
+- **重要度分析**: Fussell-Vesely、Birnbaum、RAW、RRW四大指标
+- **MOCUS算法**: 自动识别最小割集，量化系统失效概率
+- **智能故障诊断**: 信号处理、故障特征识别、根因分析
+- **预测性维护**: RUL(剩余使用寿命)预测、健康评估
+- **应急响应**: I-IV级应急预案库、行动协调、恢复规划
 
 ### 🧪 软件在环测试 (SIL) / Software-in-the-Loop Testing
 - 自动化测试用例执行
@@ -133,7 +143,14 @@ YJDT/
 │   │   └── coordination.py   # 协调控制
 │   ├── scenarios/            # 场景系统
 │   │   ├── generator.py      # 场景生成
-│   │   └── recognizer.py     # 场景识别
+│   │   ├── recognizer.py     # 场景识别
+│   │   ├── extreme_scenarios.py  # 极端场景生成(500+)
+│   │   ├── coverage_analyzer.py  # 覆盖率分析
+│   │   └── scenario_library.yaml # 场景库配置(157+)
+│   ├── safety/               # 安全分析模块
+│   │   ├── psa_analysis.py   # PSA/FTA/ETA分析
+│   │   ├── intelligent_diagnosis.py  # 智能诊断
+│   │   └── emergency_response.py     # 应急响应
 │   ├── optimization/         # 优化模块
 │   │   ├── design_optimizer.py   # 设计优化
 │   │   ├── sensor_placement.py   # 传感器布设
@@ -189,6 +206,26 @@ YJDT/
 | L3 | 条件自动 | 智能诊断 |
 | L4 | 高度自动 | 自主决策 |
 | L5 | 完全自动 | 完全自主 |
+
+## 安全设计原则 / Safety Design Principles
+
+### 核电站级安全标准
+- **深度防御**: 多层保护屏障，单一故障不导致系统失效
+- **固有安全**: 依靠自然规律实现安全，无需外部干预
+- **无悬崖效应**: 超设计基准事故不会导致灾难性后果
+- **多样性冗余**: 不同原理、不同厂家的冗余设计
+
+### 场景覆盖等级 / Scenario Coverage Levels
+
+| 概率等级 | 年发生概率 | 典型场景 | 安全要求 |
+|----------|------------|----------|----------|
+| 常态 | 1.0 | 正常运行 | 高效稳定 |
+| 年级 | 10⁻¹ | 负荷波动 | 自动调节 |
+| 偶发 | 10⁻² | 设备故障 | 安全保护 |
+| 罕见 | 10⁻³ | 甩满负荷 | 应急处置 |
+| 极罕见 | 10⁻⁴ | 多重故障 | 深度防御 |
+| 万年一遇 | 10⁻⁵ | 极端地震 | 确保安全 |
+| 超设计基准 | <10⁻⁶ | 叠加灾害 | 无悬崖效应 |
 
 ## 贡献 / Contributing
 
