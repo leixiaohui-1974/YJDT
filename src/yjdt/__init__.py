@@ -33,8 +33,72 @@ Yajiang Hydropower Cascade Distributed Intelligent Control System (YJDT)
 实现"设计即验证、建设即演练"范式
 """
 
-__version__ = "1.8.0"
+__version__ = "2.0.0"
 __author__ = "Hydropower Research Team"
+
+# ==============================================================================
+# 新增模块 - 面向运行能力的设计评估与验证
+# ==============================================================================
+
+# ODD (设计运行域)
+from yjdt.odd.operational_design_domain import (
+    SystemODD,
+    ODDValidator,
+    ODDZone,
+    DegradationLevel,
+    BoundaryLimit,
+    TransientBoundary,
+    CascadeBoundary,
+    StationODD,
+    SystemODDState,
+    create_yajiang_bigbend_odd,
+)
+
+# MBD (模型驱动设计)
+from yjdt.mbd.model_based_design import (
+    CascadeHydropowerModel,
+    ParameterOptimizer,
+    SensitivityAnalyzer,
+    ReverseDesignOptimizer,
+    DesignParameter,
+    DesignScheme,
+    DesignObjective,
+    create_yajiang_mbd_model,
+)
+
+# MAS (ODD感知多智能体系统)
+from yjdt.mas.odd_aware_mas import (
+    ODDAwareMASSystem,
+    CentralCoordinatorAgent,
+    StationControllerAgent,
+    UnitControllerAgent,
+    ODDScenarioGenerator,
+    AdaptiveObjectiveManager,
+    MultiSourceIndicatorAggregator,
+    create_yajiang_mas_system,
+)
+
+# SIL/HIL验证框架
+from yjdt.verification.sil_hil_verification import (
+    SILVerificationFramework,
+    HILVerificationFramework,
+    IntegratedVerificationSystem,
+    ODDBoundaryVerifier,
+    VerificationTestCase,
+    VerificationResult,
+    VerificationReport,
+)
+
+# 级联仿真
+from yjdt.simulation.cascade_simulation import (
+    CascadeSimulator,
+    SingleStationSimulator,
+    HydraulicCouplingModel,
+    PressureWaveModel,
+    CascadeState,
+    StationState,
+    create_yajiang_cascade_simulator,
+)
 
 from yjdt.core.hydraulic import HydraulicSystem, Pipeline, SurgeTank
 from yjdt.core.turbine import FrancisTurbine, PeltonTurbine
@@ -358,4 +422,52 @@ __all__ = [
     "ScenarioRepository",
     "TimeSeriesRepository",
     "AlarmRepository",
+    # ==============================================================================
+    # 新增模块 - 面向运行能力的设计评估与验证
+    # ==============================================================================
+    # ODD (设计运行域)
+    "SystemODD",
+    "ODDValidator",
+    "ODDZone",
+    "DegradationLevel",
+    "BoundaryLimit",
+    "TransientBoundary",
+    "CascadeBoundary",
+    "StationODD",
+    "SystemODDState",
+    "create_yajiang_bigbend_odd",
+    # MBD (模型驱动设计)
+    "CascadeHydropowerModel",
+    "ParameterOptimizer",
+    "SensitivityAnalyzer",
+    "ReverseDesignOptimizer",
+    "DesignParameter",
+    "DesignScheme",
+    "DesignObjective",
+    "create_yajiang_mbd_model",
+    # MAS (ODD感知多智能体系统)
+    "ODDAwareMASSystem",
+    "CentralCoordinatorAgent",
+    "StationControllerAgent",
+    "UnitControllerAgent",
+    "ODDScenarioGenerator",
+    "AdaptiveObjectiveManager",
+    "MultiSourceIndicatorAggregator",
+    "create_yajiang_mas_system",
+    # SIL/HIL验证框架
+    "SILVerificationFramework",
+    "HILVerificationFramework",
+    "IntegratedVerificationSystem",
+    "ODDBoundaryVerifier",
+    "VerificationTestCase",
+    "VerificationResult",
+    "VerificationReport",
+    # 级联仿真
+    "CascadeSimulator",
+    "SingleStationSimulator",
+    "HydraulicCouplingModel",
+    "PressureWaveModel",
+    "CascadeState",
+    "StationState",
+    "create_yajiang_cascade_simulator",
 ]
