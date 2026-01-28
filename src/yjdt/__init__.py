@@ -39,7 +39,7 @@ Yajiang Hydropower Cascade Distributed Intelligent Control System (YJDT)
 实现"设计即验证、建设即演练"范式
 """
 
-__version__ = "2.2.0"
+__version__ = "2.3.0"
 __author__ = "Hydropower Research Team"
 
 # ==============================================================================

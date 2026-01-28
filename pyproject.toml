@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "yjdt"
-version = "2.2.0"
+version = "2.3.0"
 description = "雅江水电梯级分层分布式智能控制系统 - Yajiang Hydropower Cascade Distributed Intelligent Control System"
 readme = "README.md"
 license = {text = "MIT"}
