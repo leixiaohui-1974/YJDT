@@ -10,6 +10,9 @@ MBD (Model-Based Design) - 模型驱动设计模块
 - 鲁棒性优化
 - ODD约束设计
 - 设计空间探索
+- 雅江工程全覆盖优化设计
+- 优化算法框架与自动选择
+- 设计-仿真验证-反馈闭环
 """
 
 from .model_based_design import (
@@ -113,6 +116,28 @@ from .optimization_framework import (
     IntegratedOptimizationFramework,
 )
 
+from .simulation_verification_integration import (
+    # 枚举
+    VerificationStatus,
+    DesignStage,
+    VerificationLevel,
+    # 数据类
+    DesignToSimulationMapping,
+    SimulationScenario,
+    SimulationResult,
+    VerificationCriterion,
+    VerificationOutcome,
+    DesignVerificationReport,
+    # 核心类
+    DesignParameterMapper,
+    SimulationScenarioLibrary,
+    VerificationCriteriaManager,
+    SimulationExecutor,
+    MBDSimulationVerificationIntegrator,
+    # 工厂函数
+    create_yajiang_verification_integrator,
+)
+
 __all__ = [
     # 基础MBD
     "DesignObjective",
@@ -171,4 +196,21 @@ __all__ = [
     "FlexibilityOptimizer",
     "SafetyOptimizer",
     "IntegratedOptimizationFramework",
+
+    # 仿真验证集成
+    "VerificationStatus",
+    "DesignStage",
+    "VerificationLevel",
+    "DesignToSimulationMapping",
+    "SimulationScenario",
+    "SimulationResult",
+    "VerificationCriterion",
+    "VerificationOutcome",
+    "DesignVerificationReport",
+    "DesignParameterMapper",
+    "SimulationScenarioLibrary",
+    "VerificationCriteriaManager",
+    "SimulationExecutor",
+    "MBDSimulationVerificationIntegrator",
+    "create_yajiang_verification_integrator",
 ]

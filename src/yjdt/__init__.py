@@ -28,12 +28,18 @@ Yajiang Hydropower Cascade Distributed Intelligent Control System (YJDT)
 - 场景数据适配器（运行数据采集/场景匹配/数据驱动场景生成）
 - REST API服务（FastAPI/OpenAPI/WebSocket实时推送）
 - 数据持久化（SQLite/Repository模式/时间序列存储）
+- ODD识别体系（规则引擎/状态机/覆盖率分析/违规检测）
+- MBD优化设计（水力/机电/控制/安全/经济全覆盖优化）
+- 优化算法框架（梯度/全局/多目标/鲁棒优化算法自动选择）
+- 设计-验证-反馈闭环（持续改进机制）
+- 灵活性与安全性优化（响应速度/爬坡率/压力裕度/稳定裕度）
+- MAS全自主运行（L5级全自主/分层降级/ODD边界守护）
 
 对标核电站安全分析与工业4.0标准，确保极端场景安全高效
 实现"设计即验证、建设即演练"范式
 """
 
-__version__ = "2.1.0"
+__version__ = "2.2.0"
 __author__ = "Hydropower Research Team"
 
 # ==============================================================================
@@ -111,6 +117,47 @@ from yjdt.mbd.advanced_optimization import (
     DesignVariable,
     ParetoSolution,
     create_cascade_optimization_problem,
+)
+
+# 雅江工程MBD优化设计
+from yjdt.mbd.yajiang_optimization_design import (
+    HydraulicSystemOptimizer,
+    ElectromechanicalOptimizer,
+    ControlSystemOptimizer,
+    CascadeCoordinationOptimizer,
+    SafetyProtectionOptimizer,
+    TransientProcessOptimizer,
+    OperatingConditionOptimizer,
+    EconomicOptimizer,
+    YajiangMBDOptimizer,
+    create_yajiang_mbd_optimizer,
+)
+
+# MBD优化框架
+from yjdt.mbd.optimization_framework import (
+    OptimizationAlgorithm,
+    ProblemType,
+    AlgorithmSelector,
+    UnifiedOptimizer,
+    DesignVerificationLoop,
+    FlexibilityOptimizer,
+    SafetyOptimizer,
+    IntegratedOptimizationFramework,
+    FlexibilityMetrics,
+    SafetyMetrics,
+)
+
+# MBD仿真验证集成
+from yjdt.mbd.simulation_verification_integration import (
+    MBDSimulationVerificationIntegrator,
+    SimulationScenarioLibrary,
+    VerificationCriteriaManager,
+    DesignParameterMapper,
+    VerificationStatus,
+    DesignStage,
+    VerificationLevel,
+    DesignVerificationReport,
+    create_yajiang_verification_integrator,
 )
 
 # SIL/HIL验证框架
@@ -531,4 +578,36 @@ __all__ = [
     "DesignVariable",
     "ParetoSolution",
     "create_cascade_optimization_problem",
+    # 雅江工程MBD优化设计
+    "HydraulicSystemOptimizer",
+    "ElectromechanicalOptimizer",
+    "ControlSystemOptimizer",
+    "CascadeCoordinationOptimizer",
+    "SafetyProtectionOptimizer",
+    "TransientProcessOptimizer",
+    "OperatingConditionOptimizer",
+    "EconomicOptimizer",
+    "YajiangMBDOptimizer",
+    "create_yajiang_mbd_optimizer",
+    # MBD优化框架
+    "OptimizationAlgorithm",
+    "ProblemType",
+    "AlgorithmSelector",
+    "UnifiedOptimizer",
+    "DesignVerificationLoop",
+    "FlexibilityOptimizer",
+    "SafetyOptimizer",
+    "IntegratedOptimizationFramework",
+    "FlexibilityMetrics",
+    "SafetyMetrics",
+    # MBD仿真验证集成
+    "MBDSimulationVerificationIntegrator",
+    "SimulationScenarioLibrary",
+    "VerificationCriteriaManager",
+    "DesignParameterMapper",
+    "VerificationStatus",
+    "DesignStage",
+    "VerificationLevel",
+    "DesignVerificationReport",
+    "create_yajiang_verification_integrator",
 ]
