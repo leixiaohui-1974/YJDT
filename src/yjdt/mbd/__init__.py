@@ -66,6 +66,53 @@ from .advanced_optimization import (
     create_cascade_optimization_problem,
 )
 
+from .yajiang_optimization_design import (
+    # 水力系统优化
+    HydraulicSystemOptimizer,
+    # 机电设备优化
+    ElectromechanicalOptimizer,
+    # 控制系统优化
+    ControlSystemOptimizer,
+    # 级联协调优化
+    CascadeCoordinationOptimizer,
+    # 安全保护优化
+    SafetyProtectionOptimizer,
+    # 过渡过程优化
+    TransientProcessOptimizer,
+    # 运行工况优化
+    OperatingConditionOptimizer,
+    # 经济性优化
+    EconomicOptimizer,
+    # 综合优化器
+    YajiangMBDOptimizer,
+    create_yajiang_mbd_optimizer,
+)
+
+from .optimization_framework import (
+    # 枚举
+    OptimizationAlgorithm,
+    ProblemType,
+    FlexibilityMetrics,
+    SafetyMetrics,
+    # 数据类
+    OptimizationProblem,
+    AlgorithmConfig,
+    VerificationResult,
+    DesignFeedback,
+    # 算法选择
+    AlgorithmSelector,
+    # 统一优化器
+    UnifiedOptimizer,
+    # 设计闭环
+    DesignVerificationLoop,
+    # 灵活性优化
+    FlexibilityOptimizer,
+    # 安全性优化
+    SafetyOptimizer,
+    # 综合框架
+    IntegratedOptimizationFramework,
+)
+
 __all__ = [
     # 基础MBD
     "DesignObjective",
@@ -96,4 +143,32 @@ __all__ = [
     "ODDConstrainedDesigner",
     "DesignSpaceExplorer",
     "create_cascade_optimization_problem",
+
+    # 雅江工程优化设计
+    "HydraulicSystemOptimizer",
+    "ElectromechanicalOptimizer",
+    "ControlSystemOptimizer",
+    "CascadeCoordinationOptimizer",
+    "SafetyProtectionOptimizer",
+    "TransientProcessOptimizer",
+    "OperatingConditionOptimizer",
+    "EconomicOptimizer",
+    "YajiangMBDOptimizer",
+    "create_yajiang_mbd_optimizer",
+
+    # 优化框架
+    "OptimizationAlgorithm",
+    "ProblemType",
+    "FlexibilityMetrics",
+    "SafetyMetrics",
+    "OptimizationProblem",
+    "AlgorithmConfig",
+    "VerificationResult",
+    "DesignFeedback",
+    "AlgorithmSelector",
+    "UnifiedOptimizer",
+    "DesignVerificationLoop",
+    "FlexibilityOptimizer",
+    "SafetyOptimizer",
+    "IntegratedOptimizationFramework",
 ]
