@@ -1,0 +1,94 @@
+# YJDT Docker Compose配置
+# 雅江水电梯级分层分布式智能控制系统
+
+version: '3.8'
+
+services:
+  # 主应用服务
+  yjdt-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: yjdt-api
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/data
+      - ./logs:/logs
+      - ./reports:/reports
+      - ./config:/app/config
+    environment:
+      - YJDT_ENV=production
+      - YJDT_LOG_LEVEL=INFO
+      - YJDT_DATA_DIR=/data
+      - YJDT_LOG_DIR=/logs
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/status"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - yjdt-network
+
+  # 仪表板服务
+  yjdt-dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: yjdt-dashboard
+    command: ["python", "-c", "from yjdt.dashboard import DashboardServer; DashboardServer(port=8080).run()"]
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./data:/data:ro
+      - ./logs:/logs:ro
+    environment:
+      - YJDT_ENV=production
+    restart: unless-stopped
+    depends_on:
+      - yjdt-api
+    networks:
+      - yjdt-network
+
+  # 数据库服务 (SQLite + 备份)
+  yjdt-db:
+    image: alpine:latest
+    container_name: yjdt-db
+    volumes:
+      - ./data/db:/data/db
+      - ./backups:/backups
+    command: >
+      /bin/sh -c "
+        while true; do
+          sleep 3600;
+          cp /data/db/*.db /backups/backup_$$(date +%Y%m%d_%H%M%S).db 2>/dev/null || true;
+          find /backups -name '*.db' -mtime +7 -delete 2>/dev/null || true;
+        done
+      "
+    restart: unless-stopped
+    networks:
+      - yjdt-network
+
+  # 日志收集服务
+  yjdt-logs:
+    image: alpine:latest
+    container_name: yjdt-logs
+    volumes:
+      - ./logs:/logs:ro
+    command: >
+      /bin/sh -c "
+        tail -f /logs/*.log 2>/dev/null || echo 'Waiting for logs...' && sleep infinity
+      "
+    restart: unless-stopped
+    networks:
+      - yjdt-network
+
+networks:
+  yjdt-network:
+    driver: bridge
+
+volumes:
+  yjdt-data:
+  yjdt-logs:
+  yjdt-reports:
