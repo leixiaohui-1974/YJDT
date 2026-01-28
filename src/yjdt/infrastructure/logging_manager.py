@@ -322,6 +322,89 @@ def get_logger(name: str = None) -> logging.Logger:
         return logging.getLogger(_root_logger_name)
 
 
+def set_log_level(level: str = "INFO", logger_name: str = None):
+    """
+    设置日志级别
+
+    Args:
+        level: 日志级别 (DEBUG, INFO, WARNING, ERROR, CRITICAL)
+        logger_name: 日志器名称，None表示设置根日志器
+    """
+    level_map = {
+        "DEBUG": logging.DEBUG,
+        "INFO": logging.INFO,
+        "WARNING": logging.WARNING,
+        "ERROR": logging.ERROR,
+        "CRITICAL": logging.CRITICAL
+    }
+    log_level = level_map.get(level.upper(), logging.INFO)
+
+    if logger_name:
+        logger = logging.getLogger(logger_name)
+    else:
+        logger = logging.getLogger(_root_logger_name)
+
+    logger.setLevel(log_level)
+
+
+def add_file_handler(log_file: str, level: str = "INFO", logger_name: str = None):
+    """
+    添加文件处理器
+
+    Args:
+        log_file: 日志文件路径
+        level: 日志级别
+        logger_name: 日志器名称
+    """
+    from pathlib import Path
+
+    level_map = {
+        "DEBUG": logging.DEBUG,
+        "INFO": logging.INFO,
+        "WARNING": logging.WARNING,
+        "ERROR": logging.ERROR,
+        "CRITICAL": logging.CRITICAL
+    }
+    log_level = level_map.get(level.upper(), logging.INFO)
+
+    # 创建目录
+    log_path = Path(log_file)
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+
+    # 创建文件处理器
+    handler = logging.FileHandler(log_file, encoding='utf-8')
+    handler.setLevel(log_level)
+    handler.setFormatter(logging.Formatter(
+        '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    ))
+
+    if logger_name:
+        logger = logging.getLogger(logger_name)
+    else:
+        logger = logging.getLogger(_root_logger_name)
+
+    logger.addHandler(handler)
+
+
+def audit_log(event: str, details: Dict = None, user: str = None):
+    """
+    审计日志
+
+    Args:
+        event: 事件名称
+        details: 事件详情
+        user: 用户
+    """
+    logger = get_logger("audit")
+    log_data = {
+        "event": event,
+        "timestamp": datetime.now().isoformat(),
+        "user": user or "system",
+        "details": details or {}
+    }
+    logger.info(f"AUDIT: {log_data}")
+
+
 def log_performance(func=None, threshold_ms: float = 100, level: str = "INFO"):
     """
     性能日志装饰器
@@ -474,6 +557,66 @@ def create_audit_logger(name: str = "audit", log_file: str = "logs/audit.log") -
     logger.addHandler(handler)
 
     return logger
+
+
+class AuditLogger:
+    """
+    审计日志器类
+
+    用于记录安全相关的操作和事件
+    """
+
+    def __init__(self, name: str = "audit", log_file: str = None):
+        self.name = name
+        self.logger = logging.getLogger(f"{_root_logger_name}.{name}")
+        self.logger.setLevel(logging.INFO)
+
+        if log_file:
+            log_dir = Path(log_file).parent
+            if log_dir and not log_dir.exists():
+                log_dir.mkdir(parents=True, exist_ok=True)
+
+            handler = logging.handlers.TimedRotatingFileHandler(
+                log_file,
+                when="midnight",
+                backupCount=90,
+                encoding="utf-8",
+            )
+            formatter = logging.Formatter(
+                "%(asctime)s | %(levelname)s | %(message)s",
+                "%Y-%m-%d %H:%M:%S"
+            )
+            handler.setFormatter(formatter)
+            self.logger.addHandler(handler)
+
+    def log_event(self, event: str, details: Dict = None, user: str = None,
+                  severity: str = "INFO"):
+        """记录审计事件"""
+        log_data = {
+            "event": event,
+            "timestamp": datetime.now().isoformat(),
+            "user": user or "system",
+            "details": details or {}
+        }
+        log_func = getattr(self.logger, severity.lower(), self.logger.info)
+        log_func(f"AUDIT: {json.dumps(log_data, ensure_ascii=False)}")
+
+    def log_access(self, resource: str, action: str, user: str = None,
+                   result: str = "success"):
+        """记录访问日志"""
+        self.log_event(
+            event="ACCESS",
+            details={"resource": resource, "action": action, "result": result},
+            user=user
+        )
+
+    def log_change(self, entity: str, before: Any, after: Any, user: str = None):
+        """记录变更日志"""
+        self.log_event(
+            event="CHANGE",
+            details={"entity": entity, "before": str(before), "after": str(after)},
+            user=user
+        )
 
 
 # 便捷函数

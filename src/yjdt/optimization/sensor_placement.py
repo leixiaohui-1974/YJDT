@@ -14,7 +14,7 @@ from typing import Dict, List, Optional, Tuple, Set
 from dataclasses import dataclass, field
 from enum import Enum
 from scipy.optimize import minimize, differential_evolution
-from scipy.linalg import matrix_rank
+from numpy.linalg import matrix_rank
 
 
 class SensorType(Enum):

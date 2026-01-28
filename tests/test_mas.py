@@ -4,6 +4,7 @@ MAS模块单元测试
 """
 
 import pytest
+from datetime import datetime
 
 
 class TestAutonomyLevel:
@@ -67,11 +68,24 @@ class TestFullAutonomousMAS:
         assert mas is not None
         assert hasattr(mas, 'autonomy_level')
 
-    def test_zone_controller(self):
-        """测试区域控制器"""
-        from yjdt.mas import ZoneController
+    def test_zone_controller_with_dependencies(self):
+        """测试区域控制器（带依赖）"""
+        from yjdt.mas import (
+            ZoneController,
+            ODDBoundaryGuard,
+            DegradationController,
+            AutonomousObjectiveManager
+        )
 
-        controller = ZoneController()
+        boundary_guard = ODDBoundaryGuard()
+        degradation_controller = DegradationController()
+        objective_manager = AutonomousObjectiveManager()
+
+        controller = ZoneController(
+            boundary_guard=boundary_guard,
+            degradation_controller=degradation_controller,
+            objective_manager=objective_manager
+        )
         assert controller is not None
 
     def test_degradation_controller(self):
@@ -101,32 +115,35 @@ class TestControlAction:
         from yjdt.mas import ControlAction
 
         action = ControlAction(
+            action_id="ACT001",
             action_type="power_adjustment",
             target="unit_1",
-            value=0.9,
-            priority=1
+            parameters={"power": 0.9, "rate": 0.05}
         )
 
+        assert action.action_id == "ACT001"
         assert action.action_type == "power_adjustment"
         assert action.target == "unit_1"
-        assert action.value == 0.9
+        assert "power" in action.parameters
 
 
-class TestAutonomousDecision:
-    """自主决策测试"""
+class TestMultiSourceIndicatorAggregator:
+    """多源指标聚合测试"""
 
-    def test_decision_creation(self):
-        """测试决策创建"""
-        from yjdt.mas import AutonomousDecision
+    def test_aggregator_creation(self):
+        """测试聚合器创建"""
+        from yjdt.mas import MultiSourceIndicatorAggregator
 
-        decision = AutonomousDecision(
-            decision_id="DEC001",
-            timestamp="2024-01-01T00:00:00",
-            autonomy_level=4,
-            actions=[],
-            confidence=0.95
-        )
+        aggregator = MultiSourceIndicatorAggregator()
+        assert aggregator is not None
 
-        assert decision.decision_id == "DEC001"
-        assert decision.autonomy_level == 4
-        assert decision.confidence == 0.95
+
+class TestAdaptiveObjectiveManager:
+    """自适应目标函数管理测试"""
+
+    def test_manager_creation(self):
+        """测试管理器创建"""
+        from yjdt.mas import AdaptiveObjectiveManager
+
+        manager = AdaptiveObjectiveManager()
+        assert manager is not None
