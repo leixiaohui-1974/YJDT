@@ -3,8 +3,8 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "yajiang-hydropower-system"
-version = "1.0.0"
+name = "yjdt"
+version = "2.3.0"
 description = "雅江水电梯级分层分布式智能控制系统 - Yajiang Hydropower Cascade Distributed Intelligent Control System"
 readme = "README.md"
 license = {text = "MIT"}
@@ -14,7 +14,8 @@ authors = [
 ]
 keywords = [
     "hydropower", "water-hammer", "MOC", "turbine", "governor",
-    "distributed-control", "MPC", "PID", "simulation", "SCADA"
+    "distributed-control", "MPC", "PID", "simulation", "SCADA",
+    "ODD", "MBD", "MAS", "optimization", "verification", "cascade"
 ]
 classifiers = [
     "Development Status :: 4 - Beta",
@@ -32,15 +33,16 @@ dependencies = [
     "matplotlib>=3.7.0",
     "pandas>=2.0.0",
     "scikit-learn>=1.2.0",
-    "torch>=2.0.0",
-    "streamlit>=1.28.0",
     "plotly>=5.15.0",
     "pyyaml>=6.0",
     "pydantic>=2.0.0",
-    "control>=0.9.0",
     "networkx>=3.0",
     "h5py>=3.8.0",
     "tqdm>=4.65.0",
+    "fastapi>=0.100.0",
+    "uvicorn>=0.22.0",
+    "websockets>=11.0",
+    "httpx>=0.24.0",
 ]
 
 [project.optional-dependencies]
@@ -58,8 +60,8 @@ docs = [
 ]
 
 [project.scripts]
-yjdt = "yjdt.main:main"
-yjdt-gui = "yjdt.gui.app:main"
+yjdt = "yjdt.cli.main:main"
+yjdt-dashboard = "yjdt.dashboard.dashboard_app:DashboardServer.run"
 
 [project.urls]
 Homepage = "https://github.com/hydropower/yajiang-system"

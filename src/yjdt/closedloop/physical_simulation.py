@@ -37,6 +37,30 @@ class DomainState:
     timestamp: datetime = field(default_factory=datetime.now)
 
 
+@dataclass
+class CouplingMatrix:
+    """
+    耦合矩阵 - 描述不同物理域之间的耦合关系
+
+    用于多物理场耦合仿真中域间信息传递
+    """
+    from_domain: DomainType
+    to_domain: DomainType
+    coupling_coefficients: Dict[str, Dict[str, float]] = field(default_factory=dict)
+
+    def get_coefficient(self, from_var: str, to_var: str) -> float:
+        """获取耦合系数"""
+        if from_var in self.coupling_coefficients:
+            return self.coupling_coefficients[from_var].get(to_var, 0.0)
+        return 0.0
+
+    def set_coefficient(self, from_var: str, to_var: str, value: float):
+        """设置耦合系数"""
+        if from_var not in self.coupling_coefficients:
+            self.coupling_coefficients[from_var] = {}
+        self.coupling_coefficients[from_var][to_var] = value
+
+
 class PhysicsDomain(ABC):
     """物理域基类"""
 

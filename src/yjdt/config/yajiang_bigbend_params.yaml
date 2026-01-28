@@ -1,0 +1,596 @@
+# ==============================================================================
+# 雅鲁藏布江大拐弯截弯取直引水梯级发电工程参数配置
+# Yarlung Zangbo River Big Bend Cut-off Water Diversion Cascade Hydropower Project
+# ==============================================================================
+# 版本: 2.0
+# 更新日期: 2024-01
+# 说明: 面向运行能力的设计评估与运行逻辑验证配置
+
+# ==============================================================================
+# 工程概述
+# ==============================================================================
+project:
+  name: "雅鲁藏布江大拐弯截弯取直引水梯级发电工程"
+  name_en: "Yarlung Zangbo Big Bend Cascade Hydropower Project"
+  code: "YX"
+  version: "2.0"
+  description: |
+    YX工程是一个有压引水系统下的5个梯级电站级联运行系统。
+    本配置面向运行能力的设计评估与运行逻辑验证。
+
+  # 工程特点
+  features:
+    - 多梯级电站在有压系统条件下强耦合运行
+    - 运行风险更多来自系统级瞬变、策略叠加与级联效应
+    - 需要在设计阶段识别系统级隐性不稳定区
+
+# ==============================================================================
+# 梯级电站配置
+# ==============================================================================
+cascade_stations:
+  # 第一级 - 墨脱水电站
+  - id: "YJ01"
+    name: "墨脱水电站"
+    name_en: "Medog Hydropower Station"
+    position: 1
+    description: "梯级龙头电站，装机容量最大"
+
+    hydraulic:
+      rated_head: 480.0              # 额定水头 (m)
+      max_head: 510.0                # 最大水头 (m)
+      min_head: 450.0                # 最小水头 (m)
+      rated_flow: 210.0              # 单机额定流量 (m³/s)
+      tunnel_length: 25000.0         # 引水隧洞长度 (m)
+      tunnel_diameter: 11.0          # 隧洞直径 (m)
+      wave_speed: 1350.0             # 压力波速 (m/s)
+      friction_factor: 0.015         # 摩阻系数
+      water_inertia_time: 12.0       # 水流惯性时间常数 (s)
+
+    surge_tank:
+      type: "impedance"              # 阻抗式
+      main_diameter: 45.0            # 大井直径 (m)
+      orifice_diameter: 6.5          # 阻抗孔口直径 (m)
+      height: 120.0                  # 高度 (m)
+      initial_level: 60.0            # 初始水位 (m)
+
+    turbine:
+      type: "francis"                # 混流式
+      num_units: 6                   # 机组数量
+      rated_power: 1000.0            # 单机额定功率 (MW)
+      rated_speed: 166.7             # 额定转速 (rpm)
+      efficiency: 0.94               # 效率
+      runaway_speed_ratio: 1.8       # 飞逸转速比
+      inertia_gd2: 130000.0          # 惯性矩 GD² (t·m²)
+      guide_vane_close_time: 8.0     # 导叶关闭时间 (s)
+      guide_vane_open_time: 12.0     # 导叶开启时间 (s)
+
+    generator:
+      type: "synchronous"
+      rated_power: 1111.0            # 额定容量 (MVA)
+      rated_voltage: 20.0            # 额定电压 (kV)
+      power_factor: 0.9
+      inertia_constant: 4.0          # 惯性时间常数 (s)
+
+    governor:
+      type: "PID"
+      kp: 2.5
+      ki: 0.15
+      kd: 4.0
+      servo_time: 0.5
+      dead_band: 0.0004
+      rate_limit: 0.1
+
+  # 第二级 - 多雄藏布水电站
+  - id: "YJ02"
+    name: "多雄藏布水电站"
+    name_en: "Duoxiongzangbu Hydropower Station"
+    position: 2
+
+    hydraulic:
+      rated_head: 450.0
+      max_head: 480.0
+      min_head: 420.0
+      rated_flow: 200.0
+      tunnel_length: 20000.0
+      tunnel_diameter: 10.0
+      wave_speed: 1300.0
+      friction_factor: 0.015
+      water_inertia_time: 10.0
+
+    surge_tank:
+      type: "impedance"
+      main_diameter: 40.0
+      orifice_diameter: 6.0
+      height: 100.0
+      initial_level: 50.0
+
+    turbine:
+      type: "francis"
+      num_units: 4
+      rated_power: 800.0
+      rated_speed: 166.7
+      efficiency: 0.93
+      runaway_speed_ratio: 1.8
+      inertia_gd2: 100000.0
+      guide_vane_close_time: 7.5
+      guide_vane_open_time: 11.0
+
+    generator:
+      type: "synchronous"
+      rated_power: 889.0
+      rated_voltage: 20.0
+      power_factor: 0.9
+      inertia_constant: 4.0
+
+    governor:
+      type: "PID"
+      kp: 2.5
+      ki: 0.15
+      kd: 4.0
+
+  # 第三级 - 达木水电站
+  - id: "YJ03"
+    name: "达木水电站"
+    name_en: "Damu Hydropower Station"
+    position: 3
+
+    hydraulic:
+      rated_head: 400.0
+      max_head: 430.0
+      min_head: 370.0
+      rated_flow: 180.0
+      tunnel_length: 15000.0
+      tunnel_diameter: 9.0
+      wave_speed: 1250.0
+      friction_factor: 0.014
+      water_inertia_time: 8.0
+
+    surge_tank:
+      type: "differential"
+      main_diameter: 35.0
+      riser_diameter: 8.0
+      height: 90.0
+      initial_level: 45.0
+
+    turbine:
+      type: "francis"
+      num_units: 3
+      rated_power: 600.0
+      rated_speed: 150.0
+      efficiency: 0.93
+      runaway_speed_ratio: 1.75
+      inertia_gd2: 80000.0
+      guide_vane_close_time: 7.0
+      guide_vane_open_time: 10.0
+
+    generator:
+      type: "synchronous"
+      rated_power: 667.0
+      rated_voltage: 18.0
+      power_factor: 0.9
+      inertia_constant: 3.5
+
+    governor:
+      type: "PID"
+      kp: 2.3
+      ki: 0.12
+      kd: 3.5
+
+  # 第四级 - 巴玉水电站
+  - id: "YJ04"
+    name: "巴玉水电站"
+    name_en: "Bayu Hydropower Station"
+    position: 4
+
+    hydraulic:
+      rated_head: 350.0
+      max_head: 380.0
+      min_head: 320.0
+      rated_flow: 160.0
+      tunnel_length: 12000.0
+      tunnel_diameter: 8.0
+      wave_speed: 1200.0
+      friction_factor: 0.014
+      water_inertia_time: 7.0
+
+    surge_tank:
+      type: "differential"
+      main_diameter: 30.0
+      riser_diameter: 7.0
+      height: 80.0
+      initial_level: 40.0
+
+    turbine:
+      type: "francis"
+      num_units: 3
+      rated_power: 500.0
+      rated_speed: 150.0
+      efficiency: 0.92
+      runaway_speed_ratio: 1.75
+      inertia_gd2: 70000.0
+      guide_vane_close_time: 6.5
+      guide_vane_open_time: 9.5
+
+    generator:
+      type: "synchronous"
+      rated_power: 556.0
+      rated_voltage: 18.0
+      power_factor: 0.9
+      inertia_constant: 3.5
+
+    governor:
+      type: "PID"
+      kp: 2.3
+      ki: 0.12
+      kd: 3.5
+
+  # 第五级 - 通德水电站
+  - id: "YJ05"
+    name: "通德水电站"
+    name_en: "Tongde Hydropower Station"
+    position: 5
+    description: "梯级末端电站"
+
+    hydraulic:
+      rated_head: 300.0
+      max_head: 330.0
+      min_head: 270.0
+      rated_flow: 150.0
+      tunnel_length: 10000.0
+      tunnel_diameter: 7.0
+      wave_speed: 1150.0
+      friction_factor: 0.013
+      water_inertia_time: 6.0
+
+    surge_tank:
+      type: "simple"
+      main_diameter: 25.0
+      height: 70.0
+      initial_level: 35.0
+
+    turbine:
+      type: "francis"
+      num_units: 2
+      rated_power: 400.0
+      rated_speed: 125.0
+      efficiency: 0.92
+      runaway_speed_ratio: 1.7
+      inertia_gd2: 50000.0
+      guide_vane_close_time: 6.0
+      guide_vane_open_time: 9.0
+
+    generator:
+      type: "synchronous"
+      rated_power: 444.0
+      rated_voltage: 15.0
+      power_factor: 0.9
+      inertia_constant: 3.0
+
+    governor:
+      type: "PID"
+      kp: 2.0
+      ki: 0.10
+      kd: 3.0
+
+# ==============================================================================
+# ODD (设计运行域) 配置
+# ==============================================================================
+odd_config:
+  name: "YX工程有压五梯级系统ODD"
+  version: "1.0"
+
+  # 系统级边界
+  system_boundaries:
+    # 压力边界
+    pressure:
+      unit: "MPa"
+      optimal_min: 4.5
+      optimal_max: 5.0
+      normal_min: 4.0
+      normal_max: 5.5
+      degraded_min: 3.5
+      degraded_max: 6.0
+      emergency_min: 3.0
+      emergency_max: 6.5
+      absolute_min: 0.0              # 防止负压气蚀
+      absolute_max: 7.0              # 防止超压
+      max_rise_rate: 0.5             # MPa/s
+      max_fall_rate: 0.5
+
+    # 流量边界
+    flow:
+      unit: "m³/s"
+      optimal_min: 800
+      optimal_max: 1000
+      normal_min: 600
+      normal_max: 1100
+      degraded_min: 400
+      degraded_max: 1200
+      emergency_min: 200
+      emergency_max: 1300
+      absolute_min: 0
+      absolute_max: 1500
+      max_rise_rate: 50
+      max_fall_rate: 100
+
+    # 频率边界
+    frequency:
+      unit: "Hz"
+      optimal_min: 49.95
+      optimal_max: 50.05
+      normal_min: 49.8
+      normal_max: 50.2
+      degraded_min: 49.5
+      degraded_max: 50.5
+      emergency_min: 48.0
+      emergency_max: 52.0
+      absolute_min: 45.0
+      absolute_max: 55.0
+
+    # 调压室水位边界
+    surge_tank_level:
+      unit: "m"
+      optimal_min: 60
+      optimal_max: 100
+      normal_min: 40
+      normal_max: 110
+      degraded_min: 30
+      degraded_max: 115
+      emergency_min: 20
+      emergency_max: 118
+      absolute_min: 10
+      absolute_max: 120
+
+  # 瞬变边界
+  transient_boundaries:
+    max_simultaneous_actions: 2      # 最大同时动作站数
+    min_action_interval: 10.0        # 最小动作间隔(s)
+    max_guide_vane_rate: 0.05        # 导叶最大动作速率(pu/s)
+    max_pressure_wave_amplitude: 0.25  # 最大压力波幅值(pu)
+    max_pressure_gradient: 0.3       # 最大压力梯度(MPa/s)
+    max_load_rejection_rate: 0.3     # 最大甩负荷比例
+    surge_tank_min_level_ratio: 0.25
+    surge_tank_max_level_ratio: 0.85
+
+  # 级联边界
+  cascade_boundaries:
+    cascade_protection_enabled: true
+    max_cascade_depth: 2             # 最大级联深度
+    degradation_priority:
+      - "maintain_pressure"          # 稳压力优先
+      - "maintain_frequency"
+      - "maintain_power_balance"
+      - "minimize_cascade_effect"
+    recovery_delay: 120.0            # 恢复延迟时间(s)
+    recovery_rate: 0.05              # 恢复速率(pu/min)
+
+# ==============================================================================
+# MBD (模型驱动设计) 配置
+# ==============================================================================
+mbd_config:
+  name: "YX工程MBD配置"
+
+  # 设计目标权重
+  design_objectives:
+    safety: 0.40
+    stability: 0.25
+    economy: 0.20
+    environment: 0.10
+    flexibility: 0.05
+
+  # 关键设计参数
+  critical_parameters:
+    - name: "governor_kp"
+      type: "control"
+      nominal: 2.5
+      min: 1.0
+      max: 5.0
+      sensitivity: "high"
+
+    - name: "governor_ki"
+      type: "control"
+      nominal: 0.15
+      min: 0.05
+      max: 0.5
+      sensitivity: "high"
+
+    - name: "guide_vane_rate_limit"
+      type: "control"
+      nominal: 0.1
+      min: 0.02
+      max: 0.2
+      sensitivity: "medium"
+
+    - name: "action_time_window"
+      type: "coordination"
+      nominal: 10.0
+      min: 5.0
+      max: 30.0
+      sensitivity: "high"
+
+  # 反向优化配置
+  reverse_optimization:
+    enabled: true
+    scenarios:
+      - "multi_station_coordination"
+      - "cascade_degradation"
+      - "oscillation_risk"
+
+# ==============================================================================
+# MAS (多智能体系统) 配置
+# ==============================================================================
+mas_config:
+  name: "YX工程MAS配置"
+
+  # 智能体配置
+  agents:
+    coordinator:
+      type: "central_coordinator"
+      update_interval: 1.0           # 决策周期(s)
+
+    station_controllers:
+      type: "station_controller"
+      update_interval: 0.1
+
+    unit_controllers:
+      type: "unit_controller"
+      update_interval: 0.02
+
+  # 目标函数自适应
+  adaptive_objective:
+    enabled: true
+    adaptation_rate: 0.1
+
+    # 场景类型对权重的影响
+    scenario_weights:
+      normal:
+        safety: 0.30
+        stability: 0.25
+        economy: 0.30
+        flexibility: 0.15
+
+      transient:
+        safety: 0.35
+        stability: 0.35
+        economy: 0.20
+        flexibility: 0.10
+
+      cascade:
+        safety: 0.50
+        stability: 0.30
+        economy: 0.15
+        flexibility: 0.05
+
+      emergency:
+        safety: 0.60
+        stability: 0.30
+        economy: 0.05
+        flexibility: 0.05
+
+  # 降级策略
+  degradation_strategy:
+    levels:
+      - name: "L0_OPTIMAL"
+        mode: "optimal"
+        description: "最优运行模式"
+
+      - name: "L1_NORMAL"
+        mode: "normal"
+        description: "正常运行模式"
+
+      - name: "L2_ALERT"
+        mode: "alert"
+        description: "预警模式"
+
+      - name: "L3_DEGRADED"
+        mode: "degraded"
+        description: "降级运行模式"
+
+      - name: "L4_EMERGENCY"
+        mode: "emergency"
+        description: "应急运行模式"
+
+      - name: "L5_SHUTDOWN"
+        mode: "shutdown"
+        description: "紧急停机模式"
+
+# ==============================================================================
+# SIL/HIL验证配置
+# ==============================================================================
+verification_config:
+  # SIL配置
+  sil:
+    enabled: true
+    coverage_target: 100             # 场景覆盖率目标(%)
+    test_categories:
+      - "odd_boundary"
+      - "transient"
+      - "cascade_effect"
+      - "degradation"
+      - "coordination"
+      - "protection"
+
+  # HIL配置
+  hil:
+    enabled: true
+    timing_requirements:
+      max_latency_ms: 10.0
+      max_jitter_ms: 1.0
+      max_missed_cycles: 0
+
+    test_categories:
+      - "timing_verification"
+      - "protection_logic"
+      - "communication"
+      - "signal_integrity"
+
+  # 验证标准
+  acceptance_criteria:
+    odd_coverage_min: 95             # ODD覆盖率最低要求
+    pass_rate_min: 90                # 通过率最低要求
+    safety_violations_max: 0         # 安全违规最大允许数
+
+# ==============================================================================
+# 仿真配置
+# ==============================================================================
+simulation_config:
+  # 基础配置
+  time_step: 0.01                    # 仿真步长(s)
+  default_duration: 300.0            # 默认仿真时长(s)
+
+  # MOC水锤计算
+  moc:
+    courant_number: 1.0
+    num_segments: 100
+
+  # 场景库
+  scenarios:
+    # 正常运行场景
+    normal:
+      count: 20
+      duration: 300
+
+    # 暂态场景
+    transient:
+      count: 15
+      duration: 180
+      types:
+        - "load_increase"
+        - "load_decrease"
+        - "unit_start"
+        - "unit_stop"
+
+    # 级联场景
+    cascade:
+      count: 10
+      duration: 600
+
+    # 边界测试场景
+    boundary:
+      count: 10
+      duration: 300
+
+# ==============================================================================
+# 控制层级配置
+# ==============================================================================
+control_hierarchy:
+  levels:
+    - name: "现场级"
+      level: 1
+      controller_type: "PID"
+      cycle_time: 0.02               # 20ms
+
+    - name: "机组级"
+      level: 2
+      controller_type: "MPC"
+      cycle_time: 0.1                # 100ms
+
+    - name: "厂站级"
+      level: 3
+      controller_type: "optimization"
+      cycle_time: 1.0                # 1s
+
+    - name: "梯级调度级"
+      level: 4
+      controller_type: "coordination"
+      cycle_time: 60.0               # 60s
