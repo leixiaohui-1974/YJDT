@@ -33,7 +33,7 @@ Yajiang Hydropower Cascade Distributed Intelligent Control System (YJDT)
 实现"设计即验证、建设即演练"范式
 """
 
-__version__ = "2.0.0"
+__version__ = "2.1.0"
 __author__ = "Hydropower Research Team"
 
 # ==============================================================================
@@ -76,6 +76,41 @@ from yjdt.mas.odd_aware_mas import (
     AdaptiveObjectiveManager,
     MultiSourceIndicatorAggregator,
     create_yajiang_mas_system,
+)
+
+# MAS全自主运行
+from yjdt.mas.autonomous_operation import (
+    FullAutonomousMAS,
+    AutonomyLevel,
+    ODDBoundaryGuard,
+    DegradationController,
+    ZoneController,
+    ControlAction,
+    AutonomousDecision,
+    create_yajiang_autonomous_mas,
+)
+
+# ODD识别体系
+from yjdt.odd.odd_identification import (
+    ODDRuleEngine,
+    ODDScanner,
+    ODDStateMachine,
+    ODDCoverageAnalyzer,
+    ODDRule,
+    ODDViolation,
+    ODDScanResult,
+    create_default_odd_rules,
+)
+
+# MBD高级优化
+from yjdt.mbd.advanced_optimization import (
+    MultiObjectiveOptimizer,
+    RobustnessOptimizer,
+    ODDConstrainedDesigner,
+    DesignSpaceExplorer,
+    DesignVariable,
+    ParetoSolution,
+    create_cascade_optimization_problem,
 )
 
 # SIL/HIL验证框架
@@ -470,4 +505,30 @@ __all__ = [
     "CascadeState",
     "StationState",
     "create_yajiang_cascade_simulator",
+    # MAS全自主运行
+    "FullAutonomousMAS",
+    "AutonomyLevel",
+    "ODDBoundaryGuard",
+    "DegradationController",
+    "ZoneController",
+    "ControlAction",
+    "AutonomousDecision",
+    "create_yajiang_autonomous_mas",
+    # ODD识别体系
+    "ODDRuleEngine",
+    "ODDScanner",
+    "ODDStateMachine",
+    "ODDCoverageAnalyzer",
+    "ODDRule",
+    "ODDViolation",
+    "ODDScanResult",
+    "create_default_odd_rules",
+    # MBD高级优化
+    "MultiObjectiveOptimizer",
+    "RobustnessOptimizer",
+    "ODDConstrainedDesigner",
+    "DesignSpaceExplorer",
+    "DesignVariable",
+    "ParetoSolution",
+    "create_cascade_optimization_problem",
 ]
